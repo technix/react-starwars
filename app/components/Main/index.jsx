@@ -57,9 +57,9 @@ export default class Application extends Component {
         return <div className="component container">
             <div className="row">
                 <div className="col-xs-1">Previous</div>
-                <div className="col-xs-3">
+                <div className="col-xs-7">
                     <h1>{this.state.data.name}</h1>
-                    <table>
+                    <table className="table">
                         <tbody>
                             <tr>
                                 <td>Height</td>
