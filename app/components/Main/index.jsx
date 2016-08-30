@@ -13,6 +13,8 @@ export default class Application extends Component {
                 film_titles: []
             }
         };
+        this.loadNext = this.loadNext.bind(this);
+        this.loadPrevious = this.loadPrevious.bind(this);
     }
 
     load_data(){
@@ -49,6 +51,17 @@ export default class Application extends Component {
             });
     }
 
+    loadPrevious(e) {
+        var new_id = this.state.id - 1;
+        if (new_id >= 1) {
+            this.setState({id: new_id}, this.load_data);
+        }
+    }
+
+    loadNext(e) {
+        this.setState({id: this.state.id + 1}, this.load_data);
+    }
+
     componentDidMount(){
         this.load_data();
     }
@@ -56,7 +69,7 @@ export default class Application extends Component {
     render(){
         return <div className="component container">
             <div className="row">
-                <div className="col-xs-1">Previous</div>
+                <div className="col-xs-1"><h1><a href="#" onClick={this.loadPrevious}>&lt;</a></h1></div>
                 <div className="col-xs-7">
                     <h1>{this.state.data.name}</h1>
                     <table className="table">
@@ -90,7 +103,7 @@ export default class Application extends Component {
                         </tbody>
                     </table>
                 </div>
-                <div className="col-xs-1">Next</div>
+                <div className="col-xs-1"><h1><a href="#" onClick={this.loadNext}>&gt;</a></h1></div>
             </div>
         </div>;
     }
