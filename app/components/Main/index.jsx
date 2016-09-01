@@ -42,20 +42,29 @@ export default class Application extends Component {
         this.load_data();
     }
 
+    componentWillReceiveProps(updatedProps) {
+        this.setState({id: +updatedProps.params.id, data: {films:[]}}, this.load_data);
+    }
+    
     render(){
+        var buttonPrevious = <div style={{width:'28px'}} />;
+        if (this.state.id > 1) {
+            buttonPrevious = <a href={"/#/persons/" + (this.state.id - 1)} className="btn btn-primary btn-lg"><span className="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a>;
+        }
+        
         return <div className="component container">
             <div className="row">
                 <div className="col-md-6 col-md-offset-3">
                     <div className="panel panel-primary">
-                        <div className="panel-heading" style={{'display': 'flex', 'justify-content': 'space-between', 'align-items': 'center'}}>
+                        <div className="panel-heading" style={{height: '100px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                             <div>
-                                <button className="btn btn-primary btn-lg" onClick={this.loadPrevious}><span className="glyphicon glyphicon-menu-left" aria-hidden="true"></span></button>
+                                {buttonPrevious}
                             </div>
                             <div>
                                 <h1>{this.state.data.name}</h1>
                             </div>
                             <div>
-                                <button className="btn btn-primary btn-lg" onClick={this.loadNext}><span className="glyphicon glyphicon-menu-right" aria-hidden="true"></span></button>
+                                <a href={"/#/persons/" + (this.state.id + 1)} className="btn btn-primary btn-lg"><span className="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
                             </div>
                         </div>
                         <div className="panel-body" >
