@@ -13,8 +13,6 @@ export default class Application extends Component {
                 films: []
             }
         };
-        this.loadNext = this.loadNext.bind(this);
-        this.loadPrevious = this.loadPrevious.bind(this);
     }
 
     load_data(){
@@ -25,17 +23,6 @@ export default class Application extends Component {
             }).then( function(json) {
                 self.setState({data: json});
             });
-    }
-
-    loadPrevious(e) {
-        var new_id = this.state.id - 1;
-        if (new_id >= 1) {
-            this.setState({id: new_id}, this.load_data);
-        }
-    }
-
-    loadNext(e) {
-        this.setState({id: this.state.id + 1}, this.load_data);
     }
 
     componentDidMount(){
