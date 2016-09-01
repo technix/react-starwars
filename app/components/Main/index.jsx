@@ -10,7 +10,7 @@ export default class Application extends Component {
         this.state = {
             id: 1,
             data: {
-                film_titles: []
+                films: []
             }
         };
         this.loadNext = this.loadNext.bind(this);
@@ -18,36 +18,12 @@ export default class Application extends Component {
     }
 
     load_data(){
-        var person_data = {};
         var self = this;
-
         fetch('http://swapi.co/api/people/' + this.state.id + '/')
             .then( function(response) {
                 return response.json();
             }).then( function(json) {
-                var film_titles = [];
-                var loaders = [];
-
-                person_data = json;
-
-                // load data for all films
-                var films = person_data.films;
-                
-                for (var i=0; i < films.length; i++) {
-                    loaders.push(
-                        fetch(films[i])
-                            .then( function(response) {
-                                return response.json();
-                            }).then( function(json) {
-                                film_titles.push(json.title);
-                            })
-                    );
-                }
-        
-                Promise.all(loaders).then(function() {
-                    person_data.film_titles = film_titles;
-                    self.setState({data: person_data});
-                });
+                self.setState({data: json});
             });
     }
 
@@ -69,41 +45,66 @@ export default class Application extends Component {
     render(){
         return <div className="component container">
             <div className="row">
-                <div className="col-xs-1"><h1><a href="#" onClick={this.loadPrevious}>&lt;</a></h1></div>
-                <div className="col-xs-7">
-                    <h1>{this.state.data.name}</h1>
-                    <table className="table">
-                        <tbody>
-                            <tr>
-                                <td>Height</td>
-                                <td>{this.state.data.height}</td>
-                            </tr>
-                            <tr>
-                                <td>Mass</td>
-                                <td>{this.state.data.mass}</td>
-                            </tr>
-                            <tr>
-                                <td>Hair color</td>
-                                <td>{this.state.data.hair_color}</td>
-                            </tr>
-                            <tr>
-                                <td>Skin color</td>
-                                <td>{this.state.data.skin_color}</td>
-                            </tr>
-                            <tr>
-                                <td>Films</td>
-                                <td>
-                                    <ul>
-                                        {this.state.data.film_titles.map( function(result, id) {
-                                            return <Movie key={id} title={result}/>;
-                                        })}
-                                    </ul>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div className="col-md-6 col-md-offset-3">
+                    <div className="panel panel-primary">
+                        <div className="panel-heading" style={{'display': 'flex', 'justify-content': 'space-between', 'align-items': 'center'}}>
+                            <div>
+                                <button className="btn btn-primary btn-lg" onClick={this.loadPrevious}><span className="glyphicon glyphicon-menu-left" aria-hidden="true"></span></button>
+                            </div>
+                            <div>
+                                <h1>{this.state.data.name}</h1>
+                            </div>
+                            <div>
+                                <button className="btn btn-primary btn-lg" onClick={this.loadNext}><span className="glyphicon glyphicon-menu-right" aria-hidden="true"></span></button>
+                            </div>
+                        </div>
+                        <div className="panel-body" >
+                            <table className="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Birth year</th>
+                                        <td>{this.state.data.birth_year}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Gender</th>
+                                        <td>{this.state.data.gender}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Height</th>
+                                        <td>{this.state.data.height}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mass</th>
+                                        <td>{this.state.data.mass}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Hair color</th>
+                                        <td>{this.state.data.hair_color}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Skin color</th>
+                                        <td>{this.state.data.skin_color}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Eye color</th>
+                                        <td>{this.state.data.eye_color}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Films</th>
+                                        <td>
+                                            <ul className="list-unstyled">
+                                                {this.state.data.films.map( function(url, id) {
+                                                    return <Movie key={url} url={url}/>;
+                                                })}
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <div className="col-xs-1"><h1><a href="#" onClick={this.loadNext}>&gt;</a></h1></div>
             </div>
         </div>;
     }
