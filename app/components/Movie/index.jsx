@@ -1,26 +1,22 @@
 import React, { Component } from 'react';
-import 'whatwg-fetch';
+import store from '../../redux/store';
+import { requestMovie } from '../../redux/actions';
+import { connect } from 'react-redux';
 
-export default class Movie extends Component {
-    constructor(){
-        super();
-        
-        this.state = {
-            title: '...'
-        };
-    }
-
-    componentDidMount() {
-        var self = this;
-        fetch(this.props.url)
-            .then( function(response) {
-                return response.json();
-            }).then( function(json) {
-                self.setState({title:json.title});
-            });
-    }
-
-    render(){
-        return <li>{this.state.title}</li>;
+function mapStateToProps(store, props){
+    return {
+        title: store.movie[props.url]
     }
 }
+
+class Movie extends Component {
+    componentDidMount(){
+        store.dispatch(requestMovie(this.props.url));
+    }
+    
+    render(){
+        return <li>{this.props.title}</li>;
+    }
+}
+
+export default connect(mapStateToProps)(Movie);

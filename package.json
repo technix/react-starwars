@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack -p",
     "start": "webpack-dev-server",
-    "test":  "gulp scripts:test"
+    "test": "gulp scripts:test"
   },
   "keywords": [],
   "author": "Serhii Mozhaiskyi",
@@ -47,7 +47,12 @@
     "bootstrap": "^3.3.7",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
+    "react-redux": "^4.4.5",
     "react-router": "^2.7.0",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.6.1",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.1.0",
     "whatwg-fetch": "^1.0.0"
   }
 }
