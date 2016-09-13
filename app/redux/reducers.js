@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 import { DATA_PERSON, DATA_MOVIE } from './actions';
 
 const initialPersonState = {
-    
     data: {
         films: []
     }

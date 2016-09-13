@@ -3,6 +3,7 @@ import store from '../../redux/store';
 import { requestMovie } from '../../redux/actions';
 import { connect } from 'react-redux';
 
+
 function mapStateToProps(store, props){
     return {
         title: store.movie[props.url]

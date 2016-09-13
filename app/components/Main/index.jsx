@@ -15,7 +15,13 @@ export default class Application extends Component {
     }
     
     render(){
-        return <Person/>;
+        return <div className="component container">
+            <div className="row">
+                <div className="col-md-6 col-md-offset-3">
+                    <Person/>
+                </div>
+            </div>
+        </div>;
     }
 };
 
