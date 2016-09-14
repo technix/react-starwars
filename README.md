@@ -25,4 +25,11 @@ Continue working on application that was created in [Hometask #1](https://github
   * hash history could be used
 * All components should be tested with help of [Enzyme](https://github.com/airbnb/enzyme)
 
+_Done in 'homework2' branch_
+
+# Hometask #3
+
+* Add redux to your application
+* Use react-redux for your components
+
 _Done in master branch_
