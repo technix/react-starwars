@@ -2,6 +2,8 @@ import { expect } from 'chai';
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import fetchMock from 'fetch-mock';
+import { Provider } from 'react-redux';
+import store from '../app/redux/store';
 
 import Movie from '../app/components/Movie';
 
@@ -16,22 +18,11 @@ fetchMock.mock(
 
 describe('Movie Component', () => {
     
-    it('initialized with correct text', () => {
-        const wrapper = shallow(<Movie />);
-        expect(wrapper.text()).to.be.equal('...');
-    });
-
-    it('renders title according to state', () => {
-        const wrapper = shallow(<Movie />);
-        wrapper.setState({title: 'Empire Strikes Back'});
-        expect(wrapper.text()).to.be.equal('Empire Strikes Back');
-    });
-    
     describe('Movie fetch', () => {
         var wrapper;
         
         before(function() {
-            wrapper = mount(<Movie url='http://swapi.co/api/films/1/' />);
+            wrapper = mount(<Provider store={store}><Movie url='http://swapi.co/api/films/1/' /></Provider>);
             setTimeout(function () {
                 done();
             }, 500);

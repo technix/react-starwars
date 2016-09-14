@@ -3,7 +3,11 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import fetchMock from 'fetch-mock';
 
-import Main from '../app/components/Main';
+import { Provider } from 'react-redux';
+import store from '../app/redux/store';
+
+import Person from '../app/components/Person';
+import { requestPerson } from '../app/redux/actions';
 
 var testData = {
     "name": "Luke Skywalker",
@@ -48,33 +52,21 @@ var filmsId = 7; // number of table cell with films list
 describe('Main Component', () => {
     
     it('initialized with correct text', () => {
-        const wrapper = shallow(<Main />);
+        const wrapper = shallow(<Provider store={store}><Person /></Provider>);
         wrapper.find('table tbody tr th').forEach(function(node, id){
             if (id !== filmsId) {
                 expect(node.text()).to.be.equal( table_columns[id] );    
             } // do not test movies now
         });
-    });
-    
-    it('displays data according to state', () => {
-        const wrapper = shallow(<Main />);
-        wrapper.setState({ data: testData });
-        wrapper.find('table tbody tr td').forEach(function(node, id){
-            if (id !== filmsId) {
-                expect(node.text()).to.be.equal( expected_data[id] );
-            } // do not test movies now
-        });
-
-        expect(wrapper.find('h1').text()).to.be.equal( testData.name );
-    });
-    
+    });    
 
     describe('Person fetch', () => {
         var wrapper;
         
         // FIXME: is there a better way to test async operations?
         before(function() {
-            wrapper = mount(<Main />);
+            wrapper = mount(<Provider store={store}><Person /></Provider>);
+            store.dispatch(requestPerson(1));
             setTimeout(function () {
                 done();
             }, 500);
